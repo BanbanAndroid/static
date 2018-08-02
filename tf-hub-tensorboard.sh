@@ -28,6 +28,6 @@ kubectl get pv
 
 kubectl get pvc
 
-chmod -R 777 /cephfs
+chmod -R 777 /cephfs/jupyterhubpv/${uuid}
 # rm ${CEPHFS_PV_YAML_TMP}
 # rm ${TF_TENSORBOARD_YAML_TMP}
