@@ -73,7 +73,7 @@ spec:
       containers:
       - command:
         - /usr/local/bin/tensorboard
-        - --logdir=/tmp/tensorflow/logs
+        - --logdir=/notebooks/tensorflow/logs
         - --port=80
         image: tensorflow/tensorflow:1.8.0
         imagePullPolicy: IfNotPresent
