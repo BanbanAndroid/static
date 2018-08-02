@@ -28,5 +28,5 @@ kubectl get pv
 
 kubectl get pvc
 
-rm ${CEPHFS_PV_YAML_TMP}
-rm ${TF_TENSORBOARD_YAML_TMP}
+# rm ${CEPHFS_PV_YAML_TMP}
+# rm ${TF_TENSORBOARD_YAML_TMP}
