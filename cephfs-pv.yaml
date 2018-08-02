@@ -6,6 +6,8 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
   hostPath:
