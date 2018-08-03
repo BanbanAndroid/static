@@ -18,8 +18,8 @@ curl -sSL "https://raw.githubusercontent.com/banbanandroid/static/master/tf_tens
 sed -i "s/uuidgen/${uuid}/g" ${CEPHFS_PV_YAML_TMP}
 sed -i "s/uuidgen/${uuid}/g" ${TF_TENSORBOARD_YAML_TMP}
 
-cat ${CEPHFS_PV_YAML_TMP}
-cat ${TF_TENSORBOARD_YAML_TMP}
+# cat ${CEPHFS_PV_YAML_TMP}
+# cat ${TF_TENSORBOARD_YAML_TMP}
 
 kubectl create -f ${CEPHFS_PV_YAML_TMP}
 kubectl create -f ${TF_TENSORBOARD_YAML_TMP}
@@ -28,11 +28,11 @@ kubectl get pv
 
 kubectl get pvc
 
-if [ ! -d "/cephfs/jupyterhubpv/${uuid}" ];then
-        sleep 2
-else
-        chmod -R 777 /cephfs/jupyterhubpv/${uuid}
-fi
+while [ ! -d "/cephfs/jupyterhubpv/${uuid}" ]; do
+	sleep 1
+done
+
+chmod -R 777 /cephfs/jupyterhubpv
 
 set +xe
 
