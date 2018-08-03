@@ -28,7 +28,7 @@ kubectl get pv
 
 kubectl get pvc
 
-while [ ! -d "/cephfs/jupyterhubpv/${uuid}" ]; do
+while [ ! -d "/cephfs/jupyterhubpv/${uuid}-board" ]; do
 	sleep 1
 done
 
