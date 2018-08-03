@@ -6,11 +6,13 @@ spec:
   capacity:
     storage: 5Gi
   accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: tensorboard
   hostPath:
-    path: /cephfs/jupyterhubpv/uuidgen/work/tensorflow/logs/
+    path: /cephfs/jupyterhubpv/uuidgen-board/work/tensorflow/logs/
 
 ---
 kind: PersistentVolumeClaim
