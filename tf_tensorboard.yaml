@@ -4,10 +4,8 @@ metadata:
   name: tensorboard-pv-uuidgen
 spec:
   capacity:
-    storage: 1Gi
+    storage: 5Gi
   accessModes:
-    - ReadWriteOnce
-    - ReadOnlyMany
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: tensorboard
@@ -25,7 +23,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
 
 ---
 apiVersion: v1
@@ -84,7 +82,7 @@ spec:
         resources: {}
         volumeMounts:
         - name: tensorbord-persisten-storage
-          mountPath: /tmp/tensorflow/logs
+          mountPath: /notebooks/tensorflow/logs
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
