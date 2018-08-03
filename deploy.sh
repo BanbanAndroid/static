@@ -5,7 +5,10 @@
 
 set -xe
 
-KUBEFLOW_NAMESPACE=${KUBEFLOW_NAMESPACE:-"kubeflow"}
+KUBE_UUID=`uuidgen`
+KUBE_UUID=${KUBE_UUID:0:8}
+
+KUBEFLOW_NAMESPACE=${KUBEFLOW_NAMESPACE:-"kubeflow-${KUBE_UUID}"}
 KUBEFLOW_REPO=${KUBEFLOW_REPO:-"`pwd`/kubeflow_repo"}
 KUBEFLOW_VERSION=${KUBEFLOW_VERSION:-"0.2.2"}
 KUBEFLOW_DEPLOY=${KUBEFLOW_DEPLOY:-true}
@@ -31,9 +34,13 @@ check_install ks
 check_install kubectl
 
 # Name of the deployment
-DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-"kubeflow"}
+DEPLOYMENT_NAME=${DEPLOYMENT_NAME:-"kubeflow-${KUBE_UUID}"}
 
 KUBEFLOW_KS_DIR=${KUBEFLOW_KS_DIR:-"`pwd`/${DEPLOYMENT_NAME}_ks_app"}
+
+if [[ -d "$KUBEFLOW_KS_DIR" ]]; then
+  rm -rf ${KUBEFLOW_KS_DIR}
+fi
 
 kubectl create namespace ${KUBEFLOW_NAMESPACE}
 kubectl config set-context $(kubectl config current-context) --namespace=${KUBEFLOW_NAMESPACE}
@@ -75,3 +82,9 @@ fi
 
 curl -sSL https://raw.githubusercontent.com/banbanandroid/static/master/tf-hub-tensorboard.sh > ${KUBEFLOW_KS_DIR}/tf-hub-tensorboard.sh
 chmod +x ${KUBEFLOW_KS_DIR}/tf-hub-tensorboard.sh
+
+set +xe
+
+echo "Deployment successful!"
+echo "Your namespace is ${KUBEFLOW_NAMESPACE}"
+echo "Your work dir is ${KUBEFLOW_KS_DIR}"
