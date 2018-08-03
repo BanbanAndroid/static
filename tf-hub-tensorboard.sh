@@ -28,6 +28,23 @@ kubectl get pv
 
 kubectl get pvc
 
-chmod -R 777 /cephfs/jupyterhubpv/${uuid}
+if [ ! -d "/cephfs/jupyterhubpv/${uuid}" ];then
+	sleep 2
+else
+	chmod -R 777 /cephfs/jupyterhubpv/${uuid}
+
+TENSORBOARD_PORT=`kubectl get svc | grep tensorboard-manual-35c10c26 | awk '{print $5}'`
+TENSORBOARD_PORT=${TENSORBOARD_PORT##*:}
+TENSORBOARD_PORT=${TENSORBOARD_PORT%/*}
+
+JUPYTER_HUB_PORT=`kubectl get svc | grep tf-hub-lb | awk '{print $5}'`
+JUPYTER_HUB_PORT=${JUPYTER_HUB_PORT##*:}
+JUPYTER_HUB_PORT=${JUPYTER_HUB_PORT%/*}
+
+set +xe
+
+echo "Your jupyter_hub address: http://10.82.45.43:"$JUPYTER_HUB_PORT
+echo "Your tensorboard address: http://10.82.45.43:"$TENSORBOARD_PORT
+
 # rm ${CEPHFS_PV_YAML_TMP}
 # rm ${TF_TENSORBOARD_YAML_TMP}
